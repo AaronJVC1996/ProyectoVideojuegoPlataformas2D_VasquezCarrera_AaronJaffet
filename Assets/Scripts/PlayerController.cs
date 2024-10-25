@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour // Clase que acompa�a al jugador
 {
     public float runSpeed;
     public float jumpSpeed;
-    public GameObject ballPrefab;
+   // public GameObject ballPrefab;
 
     private Rigidbody2D rb2D;
     private Animator anim;
     private SpriteRenderer sprtrRnd;
     private Transform trfm;
-    private float lastShoot;
-    private float waitShootTime;
+   // private float lastShoot;
+   // private float waitShootTime;
 
     // Start is called before the first frame update
     void Start()
@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>();
         sprtrRnd = GetComponent<SpriteRenderer>();
         trfm = GetComponent<Transform>();
-        waitShootTime = 0.5f;
+       // waitShootTime = 0.5f;
     }
 
     // Update is called once per frame
@@ -30,26 +30,44 @@ public class PlayerController : MonoBehaviour
     {
         checkMovement();
         checkJump();
-       // Shoot();
-       // Debug.Log(ChechGround.isGrounded);
+         checkFalling();
+        //Shoot();
+        //Debug.Log(CheckGround.isGrounded);
     }
 
    // private void Shoot() 
     //{
-      //  if (Input.GetKey(KeyCode.E) && (Time.time > lastShoot + waitShootTime))
-        //{
+     //   if (Input.GetKey(KeyCode.E) && (Time.time > lastShoot + waitShootTime))
+       // {
          //   object newBall = Instantiate(ballPrefab, trfm.position, Quaternion.identity);
            // lastShoot = Time.time;
-       // }
-   // }
+        //}
+    //}
 
-    private void checkJump() 
+      private void checkJump()
     {
-        if (Input.GetKey(KeyCode.Space))   // && CheckGround.isGrounded
+        if (Input.GetKey(KeyCode.Space) && CheckGround.isGrounded)
         {
-           rb2D.velocity = new Vector2(rb2D.velocity.x, jumpSpeed);
+            rb2D.velocity = new Vector2(rb2D.velocity.x, jumpSpeed);
+            anim.SetBool("isJumping", true); // Activamos la animación de Jumpstart
         }
-   }
+    }
+
+    private void checkFalling()
+    {
+        // Si la velocidad en el eje Y es negativa (el personaje está cayendo)
+        if (rb2D.velocity.y < 0)
+        {
+            anim.SetBool("isJumping", false); // Desactivamos la animación de subida
+            anim.SetBool("isFalling", true);  // Activamos la animación de Jumpend
+        }
+
+        // Si el personaje ha llegado al suelo
+        if (CheckGround.isGrounded)
+        {
+            anim.SetBool("isFalling", false); // Desactivamos la animación de caída
+        }
+    }
 
     private void checkMovement() 
     {
@@ -71,5 +89,4 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("isRunning", false);
         }
     }
-
 }
