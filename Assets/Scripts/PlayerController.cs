@@ -12,11 +12,10 @@ public class PlayerController : MonoBehaviour // Clase que acompa�a al jugador
     private Animator anim;
     private SpriteRenderer sprtrRnd;
     private Transform trfm;
-   private bool isAttacking = false;
-    private int attackIndex = 0;
-    private float timeBetweenAttacks = 0.3f;
+
+ private float timeBetweenAttacks = 0.25f; // Tiempo entre ataques
     private float lastAttackTime = 0f;
-    // Start is called before the first frame update
+    private bool canAttack2 = false; // Indica si se puede activar Attack2
     void Start()
     {
         rb2D = GetComponent<Rigidbody2D>();
@@ -33,7 +32,7 @@ public class PlayerController : MonoBehaviour // Clase que acompa�a al jugador
         checkJump();
          checkFalling();
         checkAttack();
-        Debug.Log(CheckGround.isGrounded);
+        
     }
 
       private void checkJump()
@@ -82,33 +81,25 @@ public class PlayerController : MonoBehaviour // Clase que acompa�a al jugador
         }
     }
 
-   private void checkAttack(){
-        if (Input.GetKeyDown(KeyCode.V)) // Cambia "J" al botón que prefieras para atacar
+  private void checkAttack()
+    {
+        if (Input.GetKey(KeyCode.W))
         {
-            if (Time.time - lastAttackTime > timeBetweenAttacks)
+            if (Time.time - lastAttackTime >= timeBetweenAttacks)
             {
-                Attack();
-                lastAttackTime = Time.time;
+                if (!canAttack2) // Si no se puede atacar 2, realiza Attack1
+                {
+                    anim.SetTrigger("Attack1");
+                    lastAttackTime = Time.time; // Reinicia el tiempo de ataque
+                    canAttack2 = true; // Ahora se puede activar Attack2
+                }
+                else // Si ya se realizó Attack1, activa Attack2
+                {
+                    anim.SetTrigger("Attack2");
+                    lastAttackTime = Time.time; // Reinicia el tiempo de ataque
+                    canAttack2 = false; // Resetea para volver a Attack1 en el siguiente ataque
+                }
             }
         }
-    }
-
-    private void Attack(){
-    if (!isAttacking)
-    {
-        anim.SetTrigger("Attack1");
-        isAttacking = true; 
-        attackIndex = 1;
-    }
-    else if (attackIndex == 1)
-    {
-        anim.SetTrigger("Attack2");
-        attackIndex = 0;
-    }
-}
-
- public void ResetAttack(){
-        isAttacking = false;
-        attackIndex = 0;
     }
 }
