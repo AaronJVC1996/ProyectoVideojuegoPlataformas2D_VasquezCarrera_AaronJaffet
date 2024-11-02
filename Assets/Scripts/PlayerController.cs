@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour // Clase que acompa�a al jugador
 {
     public float runSpeed;
     public float jumpSpeed;
-   // public GameObject ballPrefab;
+  public int vida;
 
     private Rigidbody2D rb2D;
     private Animator anim;
@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour // Clase que acompa�a al jugador
  private float timeBetweenAttacks = 0.25f; // Tiempo entre ataques
     private float lastAttackTime = 0f;
     private bool canAttack2 = false; // Indica si se puede activar Attack2
+    public GameObject PlayerAttackPrefab; // Asigna tu prefab aquí en el Inspector
+public Transform AttackPoint;
     void Start()
     {
         rb2D = GetComponent<Rigidbody2D>();
@@ -87,6 +89,8 @@ public class PlayerController : MonoBehaviour // Clase que acompa�a al jugador
         {
             if (Time.time - lastAttackTime >= timeBetweenAttacks)
             {
+            GameObject attackInstance = Instantiate(PlayerAttackPrefab, AttackPoint.position, Quaternion.identity);
+            Destroy(attackInstance, 0.5f); // Elimina el ataque tras un corto tiempo
                 if (!canAttack2) // Si no se puede atacar 2, realiza Attack1
                 {
                     anim.SetTrigger("Attack1");
@@ -101,5 +105,29 @@ public class PlayerController : MonoBehaviour // Clase que acompa�a al jugador
                 }
             }
         }
+    }
+    public void TakeDamage(int damage)
+    {
+        vida -= damage; // Reduce la vida del jugador
+        //anim.SetTrigger("TakeHit"); // No tenemos animacion de recivir daño
+
+        if (vida <= 0)
+        {
+            anim.SetTrigger("Death");
+        }
+    }
+    
+
+    private void Die()
+    {
+         // Activa la animación de muerte
+        // Aquí puedes añadir lógica adicional como desactivar el jugador o reiniciar el nivel
+        Destroy(gameObject); // Destruye el objeto después de un segundo (ajusta según sea necesario)
+    }
+    private void Bloquear(){
+            rb2D.velocity = Vector2.zero; // Detener el movimiento
+            rb2D.isKinematic = true; // Evitar que la gravedad afecte al jugador
+            GetComponent<Collider2D>().enabled = false; // Desactivar el collider
+            this.enabled = false;  // Opcional: desactivar el script de movimiento si lo tienes
     }
 }
