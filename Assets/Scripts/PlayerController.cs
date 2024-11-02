@@ -62,26 +62,42 @@ public Transform AttackPoint;
         }
     }
 
-    private void checkMovement() 
+private void checkMovement() 
+{
+    float horizontalInput = 0f; // Variable para almacenar la entrada horizontal
+
+    if (Input.GetKey(KeyCode.A))
     {
-        if (Input.GetKey(KeyCode.A))
-        {
-            rb2D.velocity = new Vector2(-runSpeed, rb2D.velocity.y);
-            anim.SetBool("isRunning", true);
-            sprtrRnd.flipX = true;
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            rb2D.velocity = new Vector2(runSpeed, rb2D.velocity.y);
-            anim.SetBool("isRunning", true);
-            sprtrRnd.flipX = false;
-        }
-        else
-        {
-            rb2D.velocity = new Vector2(0, rb2D.velocity.y);
-            anim.SetBool("isRunning", false);
-        }
+        horizontalInput = -runSpeed; // Movimiento a la izquierda
+        anim.SetBool("isRunning", true);
+        sprtrRnd.flipX = true; // Voltea el sprite
     }
+    else if (Input.GetKey(KeyCode.D))
+    {
+        horizontalInput = runSpeed; // Movimiento a la derecha
+        anim.SetBool("isRunning", true);
+        sprtrRnd.flipX = false; // No voltea el sprite
+    }
+    else
+    {
+        anim.SetBool("isRunning", false);
+    }
+
+    // Ajusta la velocidad del Rigidbody y la posición del AttackPoint
+    rb2D.velocity = new Vector2(horizontalInput, rb2D.velocity.y);
+
+    // Ajusta la posición del AttackPoint
+    Vector3 attackPointPosition = AttackPoint.localPosition;
+    if (sprtrRnd.flipX) // Si el sprite está mirando a la izquierda
+    {
+        attackPointPosition.x = -1f; // Ajusta la posición a la izquierda
+    }
+    else // Si el sprite está mirando a la derecha
+    {
+        attackPointPosition.x = 1f; // Ajusta la posición a la derecha
+    }
+    AttackPoint.localPosition = attackPointPosition; // Aplica la nueva posición
+}
 
   private void checkAttack()
     {
@@ -89,8 +105,10 @@ public Transform AttackPoint;
         {
             if (Time.time - lastAttackTime >= timeBetweenAttacks)
             {
+                
             GameObject attackInstance = Instantiate(PlayerAttackPrefab, AttackPoint.position, Quaternion.identity);
-            Destroy(attackInstance, 0.5f); // Elimina el ataque tras un corto tiempo
+            
+            Destroy(attackInstance, 0.25f); // Elimina el ataque tras un corto tiempo
                 if (!canAttack2) // Si no se puede atacar 2, realiza Attack1
                 {
                     anim.SetTrigger("Attack1");
