@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour // Clase que acompa�a al jugador
 {
@@ -141,6 +142,7 @@ private void checkMovement()
          // Activa la animación de muerte
         // Aquí puedes añadir lógica adicional como desactivar el jugador o reiniciar el nivel
         Destroy(gameObject); // Destruye el objeto después de un segundo (ajusta según sea necesario)
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     private void Bloquear(){
             rb2D.velocity = Vector2.zero; // Detener el movimiento
@@ -148,4 +150,5 @@ private void checkMovement()
             GetComponent<Collider2D>().enabled = false; // Desactivar el collider
             this.enabled = false;  // Opcional: desactivar el script de movimiento si lo tienes
     }
+
 }

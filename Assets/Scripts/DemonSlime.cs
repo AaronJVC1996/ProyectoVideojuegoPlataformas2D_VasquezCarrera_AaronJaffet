@@ -49,58 +49,62 @@ public class DemonSlime : MonoBehaviour  // Clase que acompa�a al enemigo
 
  private void checkMov() 
    {
-        float distanceToPlayer = Mathf.Abs(transformPlayer.position.x - transformEnemy.position.x);
+         if (transformPlayer == null)
+    {
+        // Si el jugador no existe, detener el movimiento del enemigo y salir de la función
+        rb2D.velocity = Vector2.zero;
+        animEnemy.SetBool("isRunning", false);
+        return;
+    }
 
-        // Determina la dirección en función de la posición del jugador
-        if (transformPlayer.position.x - transformEnemy.position.x <= 0)
-        {
-            factorX = -1;
-            sprtEnemy.flipX = false;
-        }
-        else
-        {
-            factorX = 1;
-            sprtEnemy.flipX = true;
-        }
-         Vector3 attackPointPosition = attackPoint.localPosition;
-        if (sprtEnemy.flipX) // Si el sprite está mirando a la izquierda
-        {
-            attackPointPosition.x = 4f; // Ajusta la posición a la izquierda (ajusta este valor según sea necesario)
-        }
-        else // Si el sprite está mirando a la derecha
-        {
-            attackPointPosition.x = -4f; // Ajusta la posición a la derecha (ajusta este valor según sea necesario)
-        }
-        attackPoint.localPosition = attackPointPosition;
+    float distanceToPlayer = Mathf.Abs(transformPlayer.position.x - transformEnemy.position.x);
 
-        // Si el jugador está en el área de seguimiento
-        if (CheckArea.checkFollow)
+    // Determina la dirección en función de la posición del jugador
+    if (transformPlayer.position.x - transformEnemy.position.x <= 0)
+    {
+        factorX = -1;
+        sprtEnemy.flipX = false;
+    }
+    else
+    {
+        factorX = 1;
+        sprtEnemy.flipX = true;
+    }
+
+    Vector3 attackPointPosition = attackPoint.localPosition;
+    if (sprtEnemy.flipX)
+    {
+        attackPointPosition.x = 4f;
+    }
+    else
+    {
+        attackPointPosition.x = -4f;
+    }
+    attackPoint.localPosition = attackPointPosition;
+
+    if (CheckArea.checkFollow)
+    {
+        if (!isAttacking)
         {
-            // Si el enemigo no está atacando, verifica la distancia para atacar o moverse
-            if (!isAttacking)
+            if (distanceToPlayer <= attackRange)
             {
-                // Si el jugador está en el rango de ataque, activa el trigger
-                if (distanceToPlayer <= attackRange)
-                {
-                    isAttacking = true; // Indica que el enemigo está atacando
-                    animEnemy.SetTrigger("isAttack"); // Activa la animación de ataque
-                    rb2D.velocity = Vector2.zero; // Detiene al enemigo durante el ataque
-                     
-                }
-                else
-                {
-                    // Si el jugador no está en rango de ataque, continúa moviéndose
-                    rb2D.velocity = new Vector2(factorX * runEnemy, rb2D.velocity.y);
-                    animEnemy.SetBool("isRunning", true);
-                }
+                isAttacking = true;
+                animEnemy.SetTrigger("isAttack");
+                rb2D.velocity = Vector2.zero;
+            }
+            else
+            {
+                rb2D.velocity = new Vector2(factorX * runEnemy, rb2D.velocity.y);
+                animEnemy.SetBool("isRunning", true);
             }
         }
-        else
-        {
-            rb2D.velocity = new Vector2(0, rb2D.velocity.y);
-            animEnemy.SetBool("isRunning", false);
-        }
     }
+    else
+    {
+        rb2D.velocity = new Vector2(0, rb2D.velocity.y);
+        animEnemy.SetBool("isRunning", false);
+    }
+}
      public void EndAttack()
     {
         isAttacking = false; // Permite que el enemigo vuelva a moverse después de atacar
