@@ -18,6 +18,7 @@ public class DemonSlime : MonoBehaviour  // Clase que acompa�a al enemigo
     public GameObject enemySwordPrefab; // Prefab de la espada del enemigo
     public Transform attackPoint;
     private bool isAttacking = false;
+     private CheckArea checkArea;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +26,7 @@ public class DemonSlime : MonoBehaviour  // Clase que acompa�a al enemigo
         transformEnemy = GetComponent<Transform>();
         animEnemy = GetComponent<Animator>();
         sprtEnemy = GetComponent<SpriteRenderer>();
+        checkArea = GetComponentInChildren<CheckArea>();
     }
 
     // Update is called once per frame
@@ -34,11 +36,12 @@ public class DemonSlime : MonoBehaviour  // Clase que acompa�a al enemigo
         
     }
 
-        private void OnCollisionEnter2D(Collision2D collision) // Cambia a OnTriggerEnter2D si usas triggers
+        private void OnCollisionStay2D(Collision2D collision) // OnCollisionStay2D para que no tengas que separarte y volver a pegarte al collider para recibir daño
     {
         if (collision.gameObject.CompareTag("Player")) // Asegúrate de que tu jugador tenga el tag "Player"
         {
             PlayerController playerHealth = collision.gameObject.GetComponent<PlayerController>();
+            
             if (playerHealth != null)
             {
                 playerHealth.TakeDamage(damage); // Llama al método TakeDamage del jugador
@@ -82,7 +85,7 @@ public class DemonSlime : MonoBehaviour  // Clase que acompa�a al enemigo
     }
     attackPoint.localPosition = attackPointPosition;
 
-    if (CheckArea.checkFollow)
+    if (checkArea != null && checkArea.checkFollow)
     {
         if (!isAttacking)
         {

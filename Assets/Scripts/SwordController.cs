@@ -1,27 +1,41 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+// Se que podria haber usado herencia para esto y me evitaba tanto codigo aqui, pero aun no sabia hacerlo y ya estaba avanzado, al no tener tantos enemigos no importa mucho, pero si es un juego con muchos monstruos si importaria...
 
 public class SwordController : MonoBehaviour
 {
-     private void OnTriggerEnter2D(Collider2D collision) // OnCollisionEnter2D (Collision2D) si el Collider no esta en trigger (asi empuja a los enemigos) y OnTriggerEnter2D (Collider2D) si este esta en trigger y no empujara a los enemigos
+private void OnTriggerEnter2D(Collider2D collision)
+{
+    if (collision.gameObject.CompareTag("Enemy"))
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        DemonSlime demonSlime = collision.GetComponent<DemonSlime>();
+        MiniDemon miniDemon = collision.GetComponent<MiniDemon>();
+
+        if (demonSlime != null)
         {
-            DemonSlime enemy = collision.GetComponent<DemonSlime>(); // Si el collider es un trigger deberemos quitar la parte de gameObject
-            if (enemy != null)
+            demonSlime.vida--;
+            if (demonSlime.vida <= 0)
             {
-                enemy.vida--; // Reduce la vida del enemigo
-                if (enemy.vida <= 0)
-                {
-                    
-                    collision.GetComponent<Animator>().SetTrigger("Death");
-                }
-                else
-                {
-                     collision.GetComponent<Animator>().SetTrigger("TakeHit"); // Animación de hit si aún tiene vida, Si el collider es un trigger deberemos quitar la parte de gameObject
-                }
+                collision.GetComponent<Animator>().SetTrigger("Death");
+            }
+            else
+            {
+                collision.GetComponent<Animator>().SetTrigger("TakeHit");
+            }
+        }
+        else if (miniDemon != null)
+        {
+            miniDemon.vida--;
+            if (miniDemon.vida <= 0)
+            {
+                collision.GetComponent<Animator>().SetTrigger("Death");
+            }
+            else
+            {
+                collision.GetComponent<Animator>().SetTrigger("TakeHit");
             }
         }
     }
+}
 }

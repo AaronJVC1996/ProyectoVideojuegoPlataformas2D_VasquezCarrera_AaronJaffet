@@ -18,13 +18,18 @@ public class PlayerController : MonoBehaviour // Clase que acompa�a al jugador
     private float lastAttackTime = 0f;
     private bool canAttack2 = false; // Indica si se puede activar Attack2
     public GameObject PlayerAttackPrefab; // Asigna tu prefab aquí en el Inspector
-public Transform AttackPoint;
+public Transform AttackPoint; // El objeto de referencia donde se iniciara el ataque
+
+ private float timeBetweenDamage = 0.5f; // Tiempo entre daños
+    private float lastDamageTime = 0f; // Último tiempo de daño
+    private Color originalColor;
     void Start()
     {
         rb2D = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         sprtrRnd = GetComponent<SpriteRenderer>();
         trfm = GetComponent<Transform>();
+        originalColor = sprtrRnd.color;
        
     }
 
@@ -125,30 +130,58 @@ private void checkMovement()
             }
         }
     }
-    public void TakeDamage(int damage)
+     public void TakeDamage(int damage)
     {
-        vida -= damage; // Reduce la vida del jugador
-        //anim.SetTrigger("TakeHit"); // No tenemos animacion de recivir daño
-
-        if (vida <= 0)
+        // Solo permite recibir daño si ha pasado el tiempo entre daños
+        if (Time.time - lastDamageTime >= timeBetweenDamage)
         {
-            anim.SetTrigger("Death");
+            vida -= damage; // Reduce la vida del jugador
+            lastDamageTime = Time.time; // Actualiza el tiempo del último daño
+            FlashWhite(); // Mi animacion de recibir daño inventada ya que no venia en mis assets
+            
+
+            // anim.SetTrigger("TakeHit"); // No tenemos animacion de recibir daño pero invete un cambio de color a rojo con un intervalo de tiempo para hacer de animacion de recivir daño
+
+            if (vida <= 0)
+            {
+                anim.SetTrigger("Death");
+            }
         }
     }
     
 
-    private void Die()
+    private void Die() // puesto al final de la animacion de muerte.
     {
          // Activa la animación de muerte
         // Aquí puedes añadir lógica adicional como desactivar el jugador o reiniciar el nivel
         Destroy(gameObject); // Destruye el objeto después de un segundo (ajusta según sea necesario)
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
-    private void Bloquear(){
+    private void Bloquear(){ //puesto al inicio de la animacion de muerte como evento
             rb2D.velocity = Vector2.zero; // Detener el movimiento
             rb2D.isKinematic = true; // Evitar que la gravedad afecte al jugador
             GetComponent<Collider2D>().enabled = false; // Desactivar el collider
             this.enabled = false;  // Opcional: desactivar el script de movimiento si lo tienes
     }
 
+
+    public void FlashWhite()
+{
+    StartCoroutine(FlashCoroutine());
+}
+
+
+private IEnumerator FlashCoroutine()
+{
+    // Cambia el color a blanco
+    sprtrRnd.color = Color.red;
+    // Espera 0.5 segundos
+    yield return new WaitForSeconds(0.05f);
+    // Restaura el color original
+    sprtrRnd.color = originalColor; // Aquí puedes establecer el color original si es diferente
+    yield return new WaitForSeconds(0.05f);
+    sprtrRnd.color = Color.red;
+    yield return new WaitForSeconds(0.05f);
+    sprtrRnd.color = originalColor;
+}
 }
