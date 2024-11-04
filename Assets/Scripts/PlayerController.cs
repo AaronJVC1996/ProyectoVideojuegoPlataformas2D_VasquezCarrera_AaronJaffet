@@ -23,6 +23,11 @@ public Transform AttackPoint; // El objeto de referencia donde se iniciara el at
  private float timeBetweenDamage = 0.5f; // Tiempo entre daños
     private float lastDamageTime = 0f; // Último tiempo de daño
     private Color originalColor;
+    public AudioSource soundEffectTakeHit;
+    public AudioSource soundEffectAtaque2;
+    public AudioSource soundEffectAtaque1;
+    public AudioSource soundEffectDeath;
+    public AudioSource soundEffectJump;
     void Start()
     {
         rb2D = GetComponent<Rigidbody2D>();
@@ -49,6 +54,7 @@ public Transform AttackPoint; // El objeto de referencia donde se iniciara el at
         {
             rb2D.velocity = new Vector2(rb2D.velocity.x, jumpSpeed);
             anim.SetBool("isJumping", true); // Activamos la animación de Jumpstart
+            soundEffectJump.Play();
         }
     }
 
@@ -118,12 +124,14 @@ private void checkMovement()
                 if (!canAttack2) // Si no se puede atacar 2, realiza Attack1
                 {
                     anim.SetTrigger("Attack1");
+                    soundEffectAtaque1.Play();
                     lastAttackTime = Time.time; // Reinicia el tiempo de ataque
                     canAttack2 = true; // Ahora se puede activar Attack2
                 }
                 else // Si ya se realizó Attack1, activa Attack2
                 {
                     anim.SetTrigger("Attack2");
+                    soundEffectAtaque2.Play();
                     lastAttackTime = Time.time; // Reinicia el tiempo de ataque
                     canAttack2 = false; // Resetea para volver a Attack1 en el siguiente ataque
                 }
@@ -138,6 +146,7 @@ private void checkMovement()
             vida -= damage; // Reduce la vida del jugador
             lastDamageTime = Time.time; // Actualiza el tiempo del último daño
             FlashWhite(); // Mi animacion de recibir daño inventada ya que no venia en mis assets
+            soundEffectTakeHit.Play();
             
 
             // anim.SetTrigger("TakeHit"); // No tenemos animacion de recibir daño pero invete un cambio de color a rojo con un intervalo de tiempo para hacer de animacion de recivir daño
@@ -145,6 +154,7 @@ private void checkMovement()
             if (vida <= 0)
             {
                 anim.SetTrigger("Death");
+                soundEffectDeath.Play();
             }
         }
     }
