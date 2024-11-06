@@ -19,6 +19,7 @@ public class DemonSlime : MonoBehaviour  // Clase que acompa�a al enemigo
     public Transform attackPoint;
     private bool isAttacking = false;
      private CheckArea checkArea;
+     public GameObject portalObject;
     // Start is called before the first frame update
     void Start()
     {
@@ -115,6 +116,7 @@ public class DemonSlime : MonoBehaviour  // Clase que acompa�a al enemigo
 
 public void DestroyEnemy()
 {
+    portalObject.SetActive(true);
     Destroy(gameObject); // Destruye el objeto enemigo y lo llamamos como evento al final de la animacion de morir.
 }
 private void Bloquear(){
