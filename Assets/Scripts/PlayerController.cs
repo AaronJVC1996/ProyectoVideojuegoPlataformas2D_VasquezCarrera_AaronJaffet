@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour // Clase que acompa�a al jugador
     public float runSpeed;
     public float jumpSpeed;
   public int vida;
+  
 
     private Rigidbody2D rb2D;
     private Animator anim;
@@ -35,7 +36,6 @@ public Transform AttackPoint; // El objeto de referencia donde se iniciara el at
         sprtrRnd = GetComponent<SpriteRenderer>();
         trfm = GetComponent<Transform>();
         originalColor = sprtrRnd.color;
-       
     }
 
     // Update is called once per frame
@@ -158,6 +158,19 @@ private void checkMovement()
             }
         }
     }
+
+    public void TakeHeal(int damage)
+    {
+        // Solo permite recibir daño si ha pasado el tiempo entre daños
+      int vidaMaxima = 5;
+      
+            vida += damage; 
+            if (vida > vidaMaxima){
+                vida = vidaMaxima;
+            }
+            FlashGreen(); // no tenia animacion de cura y la cree tambien
+        
+    }
     
 
     private void Die() // puesto al final de la animacion de muerte.
@@ -180,6 +193,45 @@ private void checkMovement()
     StartCoroutine(FlashCoroutine());
 }
 
+public void FlashGreen()
+{
+    StartCoroutine(FlashCoroutine2());
+}
+
+private IEnumerator FlashCoroutine2()
+{
+    // Cambia el color a blanco
+    sprtrRnd.color = Color.green;
+    // Espera 0.5 segundos
+    yield return new WaitForSeconds(0.05f);
+    // Restaura el color original
+    sprtrRnd.color = originalColor; 
+    
+    yield return new WaitForSeconds(0.05f);
+     sprtrRnd.color = Color.green;
+    // Espera 0.5 segundos
+    yield return new WaitForSeconds(0.05f);
+    // Restaura el color original
+    sprtrRnd.color = originalColor; 
+
+    yield return new WaitForSeconds(0.05f);
+     sprtrRnd.color = Color.green;
+    // Espera 0.5 segundos
+    yield return new WaitForSeconds(0.05f);
+    sprtrRnd.color = originalColor;   
+    
+    yield return new WaitForSeconds(0.05f);
+    sprtrRnd.color = Color.green;
+
+    yield return new WaitForSeconds(0.05f);
+      // Restaura el color original
+    sprtrRnd.color = originalColor;
+    // Espera 0.5 segundos
+    yield return new WaitForSeconds(0.05f);
+    sprtrRnd.color = Color.green;
+    yield return new WaitForSeconds(0.05f);
+    sprtrRnd.color = originalColor;
+}
 
 private IEnumerator FlashCoroutine()
 {
