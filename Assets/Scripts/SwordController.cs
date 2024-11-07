@@ -5,12 +5,16 @@ using UnityEngine;
 
 public class SwordController : MonoBehaviour
 {
+    
 private void OnTriggerEnter2D(Collider2D collision)
 {
     if (collision.gameObject.CompareTag("Enemy"))
     {
         DemonSlime demonSlime = collision.GetComponent<DemonSlime>();
         MiniDemon miniDemon = collision.GetComponent<MiniDemon>();
+        SmallBeeController smallBee = collision.GetComponent<SmallBeeController>();
+        BoarController boar = collision.GetComponent<BoarController>();
+        SnailController snail = collision.GetComponent<SnailController>();
 
         if (demonSlime != null)
         {
@@ -24,6 +28,7 @@ private void OnTriggerEnter2D(Collider2D collision)
                 collision.GetComponent<Animator>().SetTrigger("TakeHit");
             }
         }
+
         else if (miniDemon != null)
         {
             miniDemon.vida--;
@@ -35,6 +40,39 @@ private void OnTriggerEnter2D(Collider2D collision)
             {
                 collision.GetComponent<Animator>().SetTrigger("TakeHit");
             }
+        }
+
+         else if (smallBee != null)
+        {
+            smallBee.vida--;
+            if (smallBee.vida <= 0)
+            {
+                Destroy(collision.gameObject);
+            }
+            else
+            {
+                
+                collision.GetComponent<Animator>().SetTrigger("TakeHit");
+            }
+        }
+        
+         else if (boar != null)
+        {
+            boar.vida--;
+            if (boar.vida <= 0)
+            {
+                Destroy(collision.gameObject);
+            }
+            else
+            {
+                collision.GetComponent<Animator>().SetTrigger("TakeHit");
+            }
+        }
+         else if (snail != null)
+        {
+            snail.vida--;
+            collision.GetComponent<Animator>().SetTrigger("isDeath");
+          
         }
     }
 }
