@@ -31,19 +31,7 @@ public class SmallBeeController : MonoBehaviour
 
         // Calcula la dirección y la distancia entre el enemigo y el jugador
         Vector2 direction = (transformPlayer.position - transform.position).normalized;
-        float distanceToPlayer = Vector2.Distance(transformPlayer.position, transform.position);
-
-        // Si el enemigo está demasiado cerca, se detiene para mantener la distancia mínima
-        if (distanceToPlayer > followDistance)
-        {
-            rb2D.velocity = direction * followSpeed;
-        }
-        else
-        {
-            rb2D.velocity = Vector2.zero;
-        }
-
-        // Voltea el sprite en función de la dirección
+        rb2D.velocity = direction * followSpeed;
         sprtEnemy.flipX = direction.x > 0;
     }
 
