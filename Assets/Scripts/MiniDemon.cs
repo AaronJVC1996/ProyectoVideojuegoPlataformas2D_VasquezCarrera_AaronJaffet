@@ -20,6 +20,7 @@ public class MiniDemon : MonoBehaviour
     private float timeMoving = 0f; // Contador para el tiempo de movimiento
     public int damage = 1;
     private CheckArea checkArea;
+    public AudioSource audioAttackMiniDemon;
 
     private void Start()
     {
@@ -105,6 +106,7 @@ public class MiniDemon : MonoBehaviour
 
 private void Fireball()
 {
+     audioAttackMiniDemon.Play();
     GameObject fireballInstance = Instantiate(fireballPrefab, fireballSpawnPoint.position, Quaternion.identity);
     animator.SetTrigger("isAttack");
     

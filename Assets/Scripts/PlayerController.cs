@@ -76,7 +76,7 @@ public Transform AttackPoint; // El objeto de referencia donde se iniciara el at
 
 private void checkMovement() 
 {
-    float horizontalInput = 0f; // Variable para almacenar la entrada horizontal
+    float horizontalInput = 0f; // Variable para almacenar la entrada horizontal, basicamente al parar de presionar el boton dejara de dirigirse hacia la derecha o ala izquierda (parara el deslize)
 
     if (Input.GetKey(KeyCode.A))
     {
@@ -119,8 +119,8 @@ private void checkMovement()
             {
                 
             GameObject attackInstance = Instantiate(PlayerAttackPrefab, AttackPoint.position, Quaternion.identity);
-            
             Destroy(attackInstance, 0.25f); // Elimina el ataque tras un corto tiempo
+
                 if (!canAttack2) // Si no se puede atacar 2, realiza Attack1
                 {
                     anim.SetTrigger("Attack1");

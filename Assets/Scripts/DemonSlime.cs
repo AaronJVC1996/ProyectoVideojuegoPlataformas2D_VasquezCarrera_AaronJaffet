@@ -20,6 +20,7 @@ public class DemonSlime : MonoBehaviour  // Clase que acompa�a al enemigo
     private bool isAttacking = false;
      private CheckArea checkArea;
      public GameObject portalObject;
+     public AudioSource audioAttackDemonSlime;
     // Start is called before the first frame update
     void Start()
     {
@@ -92,6 +93,7 @@ public class DemonSlime : MonoBehaviour  // Clase que acompa�a al enemigo
         {
             if (distanceToPlayer <= attackRange)
             {
+                audioAttackDemonSlime.Play();
                 isAttacking = true;
                 animEnemy.SetTrigger("isAttack");
                 rb2D.velocity = Vector2.zero;

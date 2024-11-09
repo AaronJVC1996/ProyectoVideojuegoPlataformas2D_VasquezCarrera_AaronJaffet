@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 // Se que podria haber usado herencia para esto y me evitaba tanto codigo aqui, pero aun no sabia hacerlo y ya estaba avanzado, al no tener tantos enemigos no importa mucho, pero si es un juego con muchos monstruos si importaria...
 
 public class SwordController : MonoBehaviour
 {
-    
 private void OnTriggerEnter2D(Collider2D collision)
 {
     if (collision.gameObject.CompareTag("Enemy"))
