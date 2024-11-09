@@ -1316,13 +1316,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: PinchosArenaPrefab (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7261312105972839507, guid: 606fe579f81c955419e87f50a8b50491, type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 7854126967092708348, guid: 606fe579f81c955419e87f50a8b50491, type: 3}
       propertyPath: m_LocalPosition.x
       value: -50.197525
       objectReference: {fileID: 0}
     - target: {fileID: 7854126967092708348, guid: 606fe579f81c955419e87f50a8b50491, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -132.47559
+      value: -132.33
       objectReference: {fileID: 0}
     - target: {fileID: 7854126967092708348, guid: 606fe579f81c955419e87f50a8b50491, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1965,13 +1969,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: PinchosArenaPrefab (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 7261312105972839507, guid: 606fe579f81c955419e87f50a8b50491, type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 7854126967092708348, guid: 606fe579f81c955419e87f50a8b50491, type: 3}
       propertyPath: m_LocalPosition.x
       value: -82.912544
       objectReference: {fileID: 0}
     - target: {fileID: 7854126967092708348, guid: 606fe579f81c955419e87f50a8b50491, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -90.46777
+      value: -90.42
       objectReference: {fileID: 0}
     - target: {fileID: 7854126967092708348, guid: 606fe579f81c955419e87f50a8b50491, type: 3}
       propertyPath: m_LocalPosition.z
@@ -46065,6 +46073,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PinchosArenaPrefab (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 7261312105972839507, guid: 606fe579f81c955419e87f50a8b50491, type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 7854126967092708348, guid: 606fe579f81c955419e87f50a8b50491, type: 3}
       propertyPath: m_LocalPosition.x
       value: -157.37149
@@ -46586,13 +46598,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: PinchosArenaPrefab (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 7261312105972839507, guid: 606fe579f81c955419e87f50a8b50491, type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 7854126967092708348, guid: 606fe579f81c955419e87f50a8b50491, type: 3}
       propertyPath: m_LocalPosition.x
       value: -190.59506
       objectReference: {fileID: 0}
     - target: {fileID: 7854126967092708348, guid: 606fe579f81c955419e87f50a8b50491, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -91.580795
+      value: -91.38
       objectReference: {fileID: 0}
     - target: {fileID: 7854126967092708348, guid: 606fe579f81c955419e87f50a8b50491, type: 3}
       propertyPath: m_LocalPosition.z
@@ -46648,13 +46664,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: PinchosArenaPrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 7261312105972839507, guid: 606fe579f81c955419e87f50a8b50491, type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 7854126967092708348, guid: 606fe579f81c955419e87f50a8b50491, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -135.94075
+      value: -135.61
       objectReference: {fileID: 0}
     - target: {fileID: 7854126967092708348, guid: 606fe579f81c955419e87f50a8b50491, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -132.47559
+      value: -132.43
       objectReference: {fileID: 0}
     - target: {fileID: 7854126967092708348, guid: 606fe579f81c955419e87f50a8b50491, type: 3}
       propertyPath: m_LocalPosition.z
@@ -46772,13 +46792,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: PinchosArenaPrefab (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 7261312105972839507, guid: 606fe579f81c955419e87f50a8b50491, type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 7854126967092708348, guid: 606fe579f81c955419e87f50a8b50491, type: 3}
       propertyPath: m_LocalPosition.x
       value: -21.890488
       objectReference: {fileID: 0}
     - target: {fileID: 7854126967092708348, guid: 606fe579f81c955419e87f50a8b50491, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -90.43123
+      value: -90.53
       objectReference: {fileID: 0}
     - target: {fileID: 7854126967092708348, guid: 606fe579f81c955419e87f50a8b50491, type: 3}
       propertyPath: m_LocalPosition.z
